@@ -5,11 +5,26 @@ return {
         { "<leader>tn", "<cmd>lua _NODE_TOGGLE()<cr>", desc = "Node" },
         -- { "<leader>tt", "<cmd>lua _HTOP_TOGGLE()<cr>", desc = "Node" }, -- (Optional) Htop, If you have htop in linux
         { "<leader>tp", "<cmd>lua _PYTHON_TOGGLE()<cr>", desc = "Python" },
+        { "<leader>tg", "<cmd>lua _LAZYGIT_TOGGLE()<cr>", desc = "Git" },
         { "<leader>tf", "<cmd>ToggleTerm direction=float<cr>", desc = "Float"},
         { "<leader>th", "<cmd>ToggleTerm size=10 direction=horizontal<cr>", desc = "Horizontal" },
         { "<leader>tv", "<cmd>ToggleTerm size=80 direction=vertical<cr>", desc = "Vertical" }, -- Vertical Terminal
     },
     config = function()
+
+        local powershell_options = {
+            shell = vim.fn.executable "pwsh" == 1 and "pwsh" or "powershell",
+            shellcmdflag = "-NoLogo -NoProfile -ExecutionPolicy RemoteSigned -Command [Console]::InputEncoding=[Console]::OutputEncoding=[System.Text.Encoding]::UTF8;",
+            shellredir = "-RedirectStandardOutput %s -NoNewWindow -Wait",
+            shellpipe = "2>&1 | Out-File -Encoding UTF8 %s; exit $LastExitCode",
+            shellquote = "",
+            shellxquote = "",
+        }
+
+        for option, value in pairs(powershell_options) do
+            vim.opt[option] = value
+        end
+
         local toggleterm = require("toggleterm")
 
         toggleterm.setup({
