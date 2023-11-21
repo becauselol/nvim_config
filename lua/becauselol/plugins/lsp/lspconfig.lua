@@ -137,6 +137,13 @@ return {
       on_attach = on_attach,
     })
 
+    -- configure python server
+    lspconfig["texlab"].setup({
+      capabilities = capabilities,
+      on_attach = on_attach,
+      filetypes = {"tex"},
+    })
+
     -- configure lua server (with special settings)
     lspconfig["lua_ls"].setup({
       capabilities = capabilities,
